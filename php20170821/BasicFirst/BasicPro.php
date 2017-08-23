@@ -38,4 +38,29 @@ class BasicPro
     }
 
 
+    function __get($property){
+
+        echo "<br>";
+        echo "我在进行取值未定义字段1";
+        $pr=ucfirst($property);
+        $method = "get{$pr}";
+
+        if (method_exists($this,$method))
+        {
+
+            print $method;
+            echo "我在进行取值未定义字段2";
+
+            return $this->$method();
+
+        }
+    }
+
+
+    function getName()
+    {
+
+        echo "<br>";
+        return $this->title;
+    }
 }

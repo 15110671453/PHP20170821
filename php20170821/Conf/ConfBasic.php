@@ -27,7 +27,11 @@ class ConfBasic
     }
     public function __construct($file)
     {
+        //dirname(__FILE__).$f
         $this->file=$file;
+
+        echo "<br/>";
+        echo $this->file;
 
         /*
          *
@@ -35,7 +39,16 @@ class ConfBasic
 自 PHP 5 起，SimpleXML 函数是 PHP 核心的组成部分。无需安装即可使用这些函数
          * */
 //        $this->xml=\simplexml_load_file('test2.xml');
-        $this->xml=\simplexml_load_file($_SERVER['DOCUMENT_ROOT'].'/Conf/test.xml');
+
+
+        if(!file_exists($file))
+        {
+
+            throw  new \Exception("file does not exsit");
+        }
+        //$_SERVER['DOCUMENT_ROOT'].'/Conf/test.xml'
+
+        $this->xml=\simplexml_load_file($file);
 
 
 
@@ -43,6 +56,11 @@ class ConfBasic
 
     function write(){
 
+        if (!is_writable($this->file))
+        {
+
+            throw  new \Exception("file is not writeable");
+        }
         file_put_contents($this->file,$this->xml->asXML());
     }
 
